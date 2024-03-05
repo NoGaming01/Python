@@ -2,32 +2,32 @@
 
 import random
 
-employees: list = ["Alice", "Bob", "Cathy", "Dan", "Eric"]
-products: list = ["milk", "eggs", "bread", "cheese", "apples", "oranges"]
+class Customer:
+    def __init__(self) -> None:
+        self.get_information()
 
-def check_product(product: str):
-    if product.lower() in products:
-        return True
-    else:
-        return False
+    def get_information(self) -> None:
+        self.name: str = input("Name: ")
+        self.age: str = input("Age: ")
+        self.city: str = input("City: ")
+
+    def __str__(self) -> str:
+        return f"Customer is {self.name}, age is {self.age} and lives in {self.city}."
+
+class Employee:
+    def __init__(self) -> None:
+        self.employees: list = ["Alice", "Bob", "Cathy", "Dan", "Eric"]
+        self.branches: list = ["New York", "Los Angeles", "Chicago"]
+        self.get_employee()
+
+    def get_employee(self) -> None:
+        self.employee: str = random.choice(self.employees)
+        self.age: int = random.randint(18, 60)
+        self.branch: str = random.choice(self.branches)
+
+    def __str__(self) -> str:
+        return f"Employee is {self.employee}, age is {self.age} and works in {self.branch} branch."
     
-def get_employee():
-    return random.choice(employees)
-
-def bill(customer_name: str, product: str, employee: str):
-    print("-" * 20)
-    print(f"Name: {customer_name}")
-    print(f"Product: {product}")
-    print(f"Employee: {employee}")
-
-customer_name: str = input("Name: ")
-
-while True:
-    product: str = input("Product: ")
-    employee: str = get_employee()
-
-    if check_product(product):
-        bill(customer_name, product, employee)
-        break
-    else:
-        print(f"{product} is not available")
+print(Customer())
+print("-" * 20)
+print(Employee())
