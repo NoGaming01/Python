@@ -3,21 +3,24 @@
 import random
 import uuid
 
+uid = uuid.uuid4()
+
 class Shop:
     def __init__(self, name="The Shop"):
         self.name = name
         self.data = {}
 
-    def __str__(self):
-        return self.name
+    def store_data(self, key, value):
+        self.data[key] = value
     
 class Customer(Shop):
     def __init__(self):
         super().__init__()
+        self.get_information()
 
     def get_information(self):
         self.name = str(input("What is your name? ")).capitalize().strip()
-        self.age = int(input("What is your age? ")).strip()
+        self.age = int(input("What is your age? "))
         self.city = str(input("What is your city name? ")).capitalize().strip()
 
     def store_data(self):
@@ -25,9 +28,14 @@ class Customer(Shop):
 
         key = f"customer-{serial_number}"
 
-        self.data[key] = {}
+        data = {
+            "name": self.name,
+            "age": self.age,
+            "city": self.city,
+            "id": uid
+        }
 
-        print("Added the data.")
+        super().store_data(key, data)
         print(self.data)
         
 customer = Customer()
