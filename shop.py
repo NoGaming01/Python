@@ -1,33 +1,35 @@
-""" A Simple Shop."""
+"""A Simple Shop Game"""
 
 import random
+import uuid
 
-class Customer:
-    def __init__(self) -> None:
-        self.get_information()
+class Shop:
+    def __init__(self, name="The Shop"):
+        self.name = name
+        self.data = {}
 
-    def get_information(self) -> None:
-        self.name: str = input("Name: ")
-        self.age: str = input("Age: ")
-        self.city: str = input("City: ")
-
-    def __str__(self) -> str:
-        return f"Customer is {self.name}, age is {self.age} and lives in {self.city}."
-
-class Employee:
-    def __init__(self) -> None:
-        self.employees: list = ["Alice", "Bob", "Cathy", "Dan", "Eric"]
-        self.branches: list = ["New York", "Los Angeles", "Chicago"]
-        self.get_employee()
-
-    def get_employee(self) -> None:
-        self.employee: str = random.choice(self.employees)
-        self.age: int = random.randint(18, 60)
-        self.branch: str = random.choice(self.branches)
-
-    def __str__(self) -> str:
-        return f"Employee is {self.employee}, age is {self.age} and works in {self.branch} branch."
+    def __str__(self):
+        return self.name
     
-print(Customer())
-print("-" * 20)
-print(Employee())
+class Customer(Shop):
+    def __init__(self):
+        super().__init__()
+
+    def get_information(self):
+        self.name = str(input("What is your name? ")).capitalize().strip()
+        self.age = int(input("What is your age? ")).strip()
+        self.city = str(input("What is your city name? ")).capitalize().strip()
+
+    def store_data(self):
+        serial_number = len(self.data) + 1
+
+        key = f"customer-{serial_number}"
+
+        self.data[key] = {}
+
+        print("Added the data.")
+        print(self.data)
+        
+customer = Customer()
+
+customer.store_data()
