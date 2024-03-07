@@ -1,7 +1,6 @@
 """This is programe to Manipulate files."""
 
 from typing import IO, Callable
-import time
 
 commands_dictionary: dict = {}
 
@@ -12,9 +11,9 @@ def get_file(file_location: str, mode: str) -> IO[str]:
     except FileExistsError:
         return f"File on the path '{file_location}' is already there."
     except FileNotFoundError:
-        return f"File on the path '{file_location}' does not exists."
+        return f"File on the path '{file_location}' does not exist."
     except Exception as e:
-        return f"An error occured\nError: {e}"
+        return f"An error occurred\nError: {e}"
 
 def file_size(file: IO[str]) -> int:
     size: int = file.tell()
@@ -28,29 +27,30 @@ def command(name: str) -> None:
             return
         
         commands_dictionary[name] = func.__name__
+        return func
 
     return decorator
 
-print("Welcome to File Manipulator Programe.")
-print("*" * 100)
+def check_command(command: str) -> bool:
+    if not command.lower() in commands_dictionary:
+        return False
+    return True
+    
+def execute_command(command: str) -> None:
+    if not check_command(command):
+        print(f"Command '{command}' does not exist.")
+        return
+    func_name: str = commands_dictionary[command.lower()]
+    try:
+        func: Callable = globals()[func_name]
+        func()
+    except Exception as e:
+        print(e)
 
-print("Please enter the location of the file.")
-file_location: str = input("> ")
+@command(name="help")
+def show_commands() -> None:
+    for name in commands_dictionary:
+        print(name)
 
-file_mode: str = input("> ")
-
-file: IO[str] = get_file(file_location, file_mode)
-
-print("We are processing the things wait...")
-time.sleep(5)
-
-print("We have the information of the file.")
-print("Giving the information...")
-time.sleep(3)
-
-print(f"The name of the file is {file.name}")
-time.sleep(3)
-
-print(f"The size of the file is {file_size(file)} bytes.")
-
-file.close()
+user_command: str = input("> ")
+execute_command(user_command)
