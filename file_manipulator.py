@@ -8,6 +8,9 @@ except FileExistsError:
     print("File already Exists. Skipping this ;)")
     print("-" * 100)
 
-file = open("FileManipulator/readfile.txt", "r")
-print(file.read())
-file.close()
+try:
+    file = open("FileManipulator/filerad.txt", "r")
+    print(file.read())
+    file.close()
+except FileNotFoundError:
+    print("You forgot to make the file my boy :) or you typed the name wrong ;)")
