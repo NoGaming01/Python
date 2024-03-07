@@ -1,43 +1,18 @@
-"""This is a File Manipulator programme"""
+"""This is programe to Manipulate files."""
 
-def divider(n = 100):
-    print("-" * n)
+from typing import IO
 
-try:
-    file = open("FileManipulator/readfile.txt", "x")
-    print("Read file has been made.")
-    divider()
-    file.close()
-except FileExistsError:
-    print("File already Exists. Skipping this ;)")
-    divider()
+def get_file(file_location: str) -> IO[str]:
+    file: IO[str] = open(file_location, "r")
+    return file
 
-try:
-    file = open("FileManipulator/readfile.txt", "r")
-    print(file.read())
-    divider()
-    file.close()
-except FileNotFoundError:
-    print("You forgot to make the file my boy :) or you typed the name wrong ;)")
-    divider()
+def file_size(file: IO[str]) -> int:
+    size: int = file.tell()
+    return size
 
-try:
-    file = open("FileManipulator/writefile.txt", "w")
-    text = "Hello I am Skele.\nAnd I am writing few things in the file.\nI guess You will like this.\n:) ;) :-) idk ...\nHello and Bye."
+read_file: IO[str] = get_file("FileManipulator/readfile.txt")
 
-    file.write(text)
-    print("File has been written.")
-    divider()
-    file.close()
-except Exception as e:
-    print(f"An error occured.\n{e}")
-    divider()
+print(read_file.read())
+print(f"{file_size(read_file)} Bytes")
 
-try:
-    file = open("FileManipulator/writefile.txt", "r")
-    print(file.read())
-    divider()
-    file.close()
-except FileNotFoundError:
-    print("You forgot to make the file my boy :) or you typed the name wrong ;)")
-    divider()
+read_file.close()
