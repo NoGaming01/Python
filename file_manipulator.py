@@ -3,9 +3,16 @@
 from typing import IO
 import time
 
-def get_file(file_location: str) -> IO[str]:
-    file: IO[str] = open(file_location, "r")
-    return file
+def get_file(file_location: str, mode: str) -> IO[str]:
+    try:
+        file: IO[str] = open(file_location, mode)
+        return file
+    except FileExistsError:
+        return f"File on the path `{file_location}` is already there."
+    except FileNotFoundError:
+        return f"File on the path `{file_location}` does not exists."
+    except Exception as e:
+        return f"An error occured\nError: {e}"
 
 def file_size(file: IO[str]) -> int:
     size: int = file.tell()
@@ -17,7 +24,9 @@ print("*" * 100)
 print("Please enter the location of the file.")
 file_location: str = input("> ")
 
-file: IO[str] = get_file(file_location)
+file_mode: str = input("> ")
+
+file: IO[str] = get_file(file_location, file_mode)
 
 print("We are processing the things wait...")
 time.sleep(5)
