@@ -3,9 +3,7 @@
 from typing import IO, Callable, Optional
 import os
 
-
 commands_dictionary = {}
-
 
 def command(name: str) -> Callable:
     def decorator(func: Callable) -> Callable:
@@ -72,6 +70,11 @@ def close_file() -> None:
 @command(name="clear")
 def clear_screen() -> None:
     os.system("cls" if os.name == "nt" else "clear")
+
+@command(name="size")
+def file_size() -> None:
+    opened_file.seek(0, os.SEEK_END)
+    print(f"{opened_file.tell()} Bytes")
 
 
 while True:
