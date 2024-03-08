@@ -5,4 +5,7 @@ import datetime
 
 now = datetime.datetime.now()
 
-print(now)
+print(f"{now:%d.%m.%Y}")
+print(f"{now:%D}")
+print(f"{now:%d-%B-%Y}")
+print(f"{now:%H:%M}")
