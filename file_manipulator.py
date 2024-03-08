@@ -32,14 +32,33 @@ def execute_command(command: str, *args: list[str]) -> None:
         func = globals()[func_name]
         func(*args)
     except ValueError as e:
-        print(f"Vakue Error: {e}")
+        print(f"Value Error: {e}")
     except Exception as e:
         print(f"Error: {e}")
 
-def get_command_from_user() -> str:
-    command_input: str = input("Enter Command > ")
-    return command_input
+@command(name="help")
+def help_menu() -> None:
+    for commands in commands_dictionary:
+        print(commands)
 
-command_from_user = get_command_from_user()
+def get_file(file_location: str) -> IO[str]:
+    file: IO[str] = open(file_location, "r")
+    return file
 
-execute_command(*command_from_user.split())
+@command(name="open")
+def open_file(file_location: str) -> None:
+    file: IO[str] = get_file(file_location)
+    print(file)
+
+while True:
+
+    def get_command_from_user() -> str:
+        command_input: str = input("Enter Command > ")
+        return command_input
+
+    command_from_user = get_command_from_user()
+
+    if command_from_user == 'exit':
+        break
+
+    execute_command(*command_from_user.split())
