@@ -1,6 +1,7 @@
 """This is programe to Manipulate files."""
 
 from typing import IO, Callable, Optional
+import os
 
 commands_dictionary = {}
 
@@ -41,14 +42,28 @@ def help_menu() -> None:
     for commands in commands_dictionary:
         print(commands)
 
-def get_file(file_location: str) -> IO[str]:
-    file: IO[str] = open(file_location, "r")
+def get_file(file_location: str, file_mode: str) -> IO[str]:
+    file: IO[str] = open(file_location, file_mode)
     return file
 
 @command(name="open")
-def open_file(file_location: str) -> None:
-    file: IO[str] = get_file(file_location)
-    print(file)
+def open_file(file_location: str, file_mode: Optional[str] = "r") -> None:
+    global opened_file
+    opened_file = get_file(file_location, file_mode)
+    print("File has been loaded.")
+
+@command(name="read")
+def read_file() -> None:
+    print(opened_file.read())
+
+@command(name="close")
+def close_file() -> None:
+    opened_file.close()
+    print("File has been closed.")
+
+@command(name="clear")
+def clear_screen() -> None:
+    os.system("cls" if os.name == "nt" else "clear")
 
 while True:
 
