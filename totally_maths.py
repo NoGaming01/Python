@@ -3,16 +3,17 @@
 import random
 import signal
 import sys
+from typing import get_type_hints
 
 
-def generate_problems() -> int:
+def generate_problems() -> tuple[int, int]:
     number1: int = random.randint(100, 1000)
     number2: int = random.randint(100, 1000)
 
     return number1, number2
 
 
-def exit_shell(signal, frame):
+def exit_shell(signal, frame) -> None:
     print("\nExiting the shell.")
     sys.exit(0)
 
