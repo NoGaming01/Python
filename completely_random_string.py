@@ -10,7 +10,8 @@ def random_string_v1(length: int) -> str:
     return "".join(random.choices(characters, k=length))
 
 
-generated_tokens: list = []
+tokens: list = []
+used_tokens: list = []
 
 
 def random_string_v2(length: int) -> str:
@@ -19,13 +20,27 @@ def random_string_v2(length: int) -> str:
     token = "".join(random.choices(characters, k=length))
 
     while True:
-        if token in generated_tokens:
+        if token in tokens:
             continue
-        generated_tokens.append(token)
+        tokens.append(token)
         return token
-        
 
-for i in range(10 ** 5):
-    print(random_string_v2(121))
 
-print(getsizeof(generated_tokens))
+def user_response() -> str:
+    user_input: str = input("Token: ")
+
+    if user_input in used_tokens:
+        return "Sorry the token has been used"
+    elif user_input in tokens:
+        used_tokens.append(user_input)
+        return "Login Successfull"
+    return "Invalid Token"
+
+
+for i in range(10):
+    print(random_string_v2(6))
+
+print(getsizeof(tokens))
+
+while True:
+    print(user_response())
